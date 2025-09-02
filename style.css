@@ -27,7 +27,7 @@ body { background:#fff; overflow: hidden; }  /* sin scroll mientras todo quepa *
   display:flex; flex-direction:column;
   align-items:center;               /* centra horizontal */
   justify-content:center;           /* centra vertical en el espacio disponible */
-  margin: var(--header-h) 48px 0 48px;
+  margin: var(--header-h) 12px 0 12px;
   min-height: calc(100dvh - var(--header-h) - var(--footer-h));
   padding: 0 8px;
   padding-bottom: calc(var(--footer-h) + 8px); /* evita solape con footer fijo */
