@@ -15,41 +15,41 @@
 
     <!-- Contenido entre header y footer -->
     <main class="contain-primary">
-      <section id="encuesta" class="form-card" aria-labelledby="encuesta-title">
-        <h2 id="encuesta-title" class="visually-hidden">Encuesta</h2>
-        <form novalidate>
-          <div class="form-grid">
-            <!-- Nombre -->
-            <div class="f-control">
-              <label for="nombre">Nombre completo <span class="req">*</span></label>
-              <input id="nombre" type="text" placeholder="Escribe tu nombre completo" required />
-            </div>
+        <section id="encuesta" class="form-card" aria-labelledby="encuesta-title">
+            <h2 id="encuesta-title" class="visually-hidden">Encuesta</h2>
+            <form novalidate>
+            <div class="form-grid">
+                <!-- Nombre -->
+                <div class="f-control">
+                <label for="nombre">Nombre completo <span class="req">*</span></label>
+                <input id="nombre" type="text" placeholder="Escribe tu nombre completo" required />
+                </div>
 
-            <!-- Rango de Edad -->
-            <div class="f-control">
-              <label for="edad">Rango de edad <span class="req">*</span></label>
-              <select id="edad" required>
-                <option value="" disabled selected>Selecciona tu rango de edad</option>
-                <option value="18-24">18–24</option>
-                <option value="25-34">25–34</option>
-                <option value="35-44">35–44</option>
-                <option value="45-54">45–54</option>
-                <option value="55+">55+</option>
-              </select>
-            </div>
+                <!-- Rango de Edad -->
+                <div class="f-control">
+                <label for="edad">Rango de edad <span class="req">*</span></label>
+                <select id="edad" required>
+                    <option value="" disabled selected>Selecciona tu rango de edad</option>
+                    <option value="18-24">18–24</option>
+                    <option value="25-34">25–34</option>
+                    <option value="35-44">35–44</option>
+                    <option value="45-54">45–54</option>
+                    <option value="55+">55+</option>
+                </select>
+                </div>
 
-            <!-- Género -->
-            <div class="f-control">
-              <label for="genero">Género <span class="req">*</span></label>
-              <select id="genero" required>
-                <option value="" disabled selected>Selecciona tu género</option>
-                <option value="masculino">Masculino</option>
-                <option value="femenino">Femenino</option>
-              </select>
+                <!-- Género -->
+                <div class="f-control">
+                <label for="genero">Género <span class="req">*</span></label>
+                <select id="genero" required>
+                    <option value="" disabled selected>Selecciona tu género</option>
+                    <option value="masculino">Masculino</option>
+                    <option value="femenino">Femenino</option>
+                </select>
+                </div>
             </div>
-          </div>
-        </form>
-      </section>
+            </form>
+        </section>
     </main>
 
     <!-- Footer fijo -->
@@ -71,10 +71,10 @@
         </span>
       </div>
 
-      <button disabled="true" class="bottom-footer">
+      <button id="btn-conectar" disabled="true" class="bottom-footer">
         <h1>Conectar a Internet</h1>
       </button>
-      <h1>Acepta los términos y condiciones para continuar</h1>
+      <h1 class="text-footer">Acepta los términos y condiciones para continuar</h1>
     </footer>
     <script src="script.js"></script>
   </body>

@@ -54,9 +54,9 @@ body { background:#fff; overflow: hidden; }  /* sin scroll mientras todo quepa *
 .f-control .req{ color:#2c39ee;  font-weight:700;  font-size: 1rem;}
 
 .f-control input, .f-control select{
-  height:44px; padding:0 12px; border-radius:10px;
+  height:44px; padding:0 0.6rem; border-radius:10px;
   border:1px solid var(--field-b); background: var(--field-bg);
-  font-size:15px; color:var(--text);
+  font-size:0.6rem; color:var(--text);
   transition: box-shadow .2s, border-color .2s, background .2s;
 }
 .f-control input::placeholder{ color:#a4b3d1; font-size:.85rem; }
