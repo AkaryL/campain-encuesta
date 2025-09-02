@@ -1,4 +1,3 @@
-// Esperar a que cargue todo
 document.addEventListener("DOMContentLoaded", () => {
   const nombre = document.getElementById("nombre");
   const edad = document.getElementById("edad");
@@ -41,16 +40,33 @@ document.addEventListener("DOMContentLoaded", () => {
     el.addEventListener("change", validar);
   });
 
-  // Enviar los datos al backend cuando se hace clic en "Conectar a Internet"
+  // Función para obtener parámetros GET
+  function getQueryParam(key) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(key);
+  }
+
+  const tiempoInicio = Date.now();
+
   boton.addEventListener("click", async () => {
+    const user_mac = getQueryParam("user_mac");
+    const router_mac = getQueryParam("router_mac");
+    const timeonscreen = Math.floor((Date.now() - tiempoInicio) / 1000);
+
+    if (!user_mac || !router_mac) {
+      alert("Faltan datos de conexión. Intenta recargar la página.");
+      return;
+    }
+
     const data = new URLSearchParams();
     data.append("nombre", nombre.value.trim());
     data.append("edad", edad.value);
     data.append("genero", genero.value);
+    data.append("timeonscreen", timeonscreen);
 
     try {
-      const response = await fetch("/api/encuesta", {
-        method: "POST",
+      const response = await fetch(`http://localhost:4000/api/v2/campaigns/encuesta?user_mac=${user_mac}&router_mac=${router_mac}`, {
+        method: "POST", // ✅ CORREGIDO: usar POST
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         },
@@ -59,8 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const result = await response.json();
 
-      if (result.redireccion) {
-        window.location.href = result.redireccion;
+      if (result.campaign || result.redireccion) {
+        window.location.href = result.campaign || result.redireccion;
       } else {
         alert("Gracias por participar. No se encontró redirección.");
       }
