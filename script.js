@@ -1,42 +1,54 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const nombre = document.getElementById("nombre");
-  const edad = document.getElementById("edad");
-  const genero = document.getElementById("genero");
+  const nombre   = document.getElementById("nombre");
+  const edad     = document.getElementById("edad");
+  const genero   = document.getElementById("genero");
   const checkbox = document.getElementById("cbx-46");
-  const boton = document.querySelector(".bottom-footer");
-  const text = document.querySelector(".text-footer");
+  const boton    = document.getElementById("btn-conectar"); // si prefieres, usa tu querySelector actual
+  const text     = document.querySelector(".text-footer");
+  const edadError    = document.getElementById("edad-error");
+  const nombreError  = document.getElementById("nombre-error");
 
-  // Desactivar botón al inicio
-  boton.style.pointerEvents = "none";
-  boton.style.opacity = "0.5";
-
-  function validar() {
-    const lleno =
-      nombre.value.trim() !== "" &&
-      edad.value !== "" &&
-      genero.value !== "" &&
-      checkbox.checked;
-
-    if (lleno) {
-      boton.style.pointerEvents = "auto";
-      boton.style.opacity = "1";
-      boton.style.backgroundColor = "#2c39ee";
-      boton.disabled = false;
-      text.style.color = "#15db51ff";
-      text.innerHTML = "Listo para conectar";
-    } else {
-      boton.style.backgroundColor = "#d9dce0";
-      boton.style.pointerEvents = "none";
-      boton.style.opacity = "0.5";
-      boton.disabled = true;
-      text.innerHTML = "Acepta los términos y condiciones para continuar";
-      text.style.color = "#46484d";
-    }
+  function validarEdad(){
+    const v = edad.value.trim();
+    if (v === "") { edadError.textContent = ""; edad.setCustomValidity(""); return false; }
+    const n = Number(v);
+    if (!Number.isInteger(n)) { edadError.textContent = "Ingresa un número entero."; edad.setCustomValidity("Número inválido"); return false; }
+    if (n < 1 || n > 120) { edadError.textContent = "La edad debe estar entre 1 y 120."; edad.setCustomValidity("Fuera de rango"); return false; }
+    edadError.textContent = ""; edad.setCustomValidity(""); return true;
   }
 
-  // Escuchar cambios
-  [nombre, edad, genero, checkbox].forEach(el => {
-    el.addEventListener("input", validar);
+  function validarNombre(){
+    const v = nombre.value.trim().replace(/\s+/g, " ");
+    if (v === "") { nombreError.textContent = ""; nombre.setCustomValidity(""); return false; }
+    const soloLetras = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ' -]+$/.test(v);
+    const partes = v.split(" ");
+    const dosPalabras = partes.length >= 2 && partes[0].length >= 2 && partes[1].length >= 2;
+    if (!soloLetras){ nombreError.textContent = "Usa solo letras y espacios."; nombre.setCustomValidity("Caracteres inválidos"); return false; }
+    if (!dosPalabras){ nombreError.textContent = "Escribe nombre y apellido."; nombre.setCustomValidity("Nombre incompleto"); return false; }
+    nombreError.textContent = ""; nombre.setCustomValidity(""); return true;
+  }
+
+  function validar() {
+    const ok = validarNombre() &&
+               validarEdad() &&
+               genero.value !== "" &&
+               checkbox.checked;
+
+    boton.disabled = !ok;
+    boton.style.pointerEvents = ok ? "auto" : "none";
+    boton.style.opacity = ok ? "1" : "0.5";
+    boton.style.backgroundColor = ok ? "#2c39ee" : "#d9dce0";
+    text.textContent = ok ? "Listo para conectar" : "Acepta los términos y condiciones para continuar";
+    text.style.color = ok ? "#15db51" : "#46484d";
+  }
+
+  // eventos
+  nombre.addEventListener("input", () => { validarNombre(); validar(); });
+  nombre.addEventListener("change", () => { validarNombre(); validar(); });
+  edad.addEventListener("input", () => { validarEdad(); validar(); });
+  edad.addEventListener("change", () => { validarEdad(); validar(); });
+  [genero, checkbox].forEach(el => {
+    el.addEventListener("input",  validar);
     el.addEventListener("change", validar);
   });
 
@@ -48,6 +60,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const tiempoInicio = Date.now();
 
+  validar(); // estado inicial
+
+  // Enviar los datos al backend cuando se hace clic en "Conectar a Internet"
   boton.addEventListener("click", async () => {
     const user_mac = getQueryParam("user_mac");
     const router_mac = getQueryParam("router_mac");
