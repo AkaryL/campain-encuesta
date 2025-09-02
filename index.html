@@ -1,42 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="style.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Conéctate a Internet</title>
+    <link rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+    <!-- Header fijo -->
     <header class="contain-header">
-        <h1 class="text-header">Conéctate a Internet</h1>
-        <span class="sub-header">Ayúdanos con una breve encuesta</span>
+      <h1 class="text-header">Conéctate a Internet</h1>
+      <span class="sub-header">Ayúdanos con una breve encuesta</span>
     </header>
-    <div class="contain-primary">
-        <h1>contenido</h1>
-        <h1>contenido</h1>
-        <h1>contenido</h1>
-        <h1>contenido</h1>
-        <h1>contenido</h1>
-        <h1>contenido</h1>
-        <h1>contenido</h1>
-    </div>
-    <footer class="contain-footer">
-        <div class="contain-condition">
-            <div class="checkbox-wrapper-46">
-                <input type="checkbox" id="cbx-46" class="inp-cbx" />
-                <label for="cbx-46" class="cbx">
-                    <span>
-                        <svg viewBox="0 0 12 10" height="10px" width="12px">
-                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline></svg>
-                    </span>
-                </label>
+
+    <!-- Contenido entre header y footer -->
+    <main class="contain-primary">
+      <section id="encuesta" class="form-card" aria-labelledby="encuesta-title">
+        <h2 id="encuesta-title" class="visually-hidden">Encuesta</h2>
+        <form novalidate>
+          <div class="form-grid">
+            <!-- Nombre -->
+            <div class="f-control">
+              <label for="nombre">Nombre completo <span class="req">*</span></label>
+              <input id="nombre" type="text" placeholder="Escribe tu nombre completo" required />
             </div>
-            <span>Acepto los <span class="blue">tér minos y condiciones</span> y la <span class="blue">política de privacidad</span> para el uso del Wi-Fi público.</span>
+
+            <!-- Rango de Edad -->
+            <div class="f-control">
+              <label for="edad">Rango de edad <span class="req">*</span></label>
+              <select id="edad" required>
+                <option value="" disabled selected>Selecciona tu rango de edad</option>
+                <option value="18-24">18–24</option>
+                <option value="25-34">25–34</option>
+                <option value="35-44">35–44</option>
+                <option value="45-54">45–54</option>
+                <option value="55+">55+</option>
+              </select>
+            </div>
+
+            <!-- Género -->
+            <div class="f-control">
+              <label for="genero">Género <span class="req">*</span></label>
+              <select id="genero" required>
+                <option value="" disabled selected>Selecciona tu género</option>
+                <option value="masculino">Masculino</option>
+                <option value="femenino">Femenino</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <!-- Footer fijo -->
+    <footer class="contain-footer">
+      <div class="contain-condition">
+        <div class="checkbox-wrapper-46">
+          <input type="checkbox" id="cbx-46" class="inp-cbx" />
+          <label for="cbx-46" class="cbx">
+            <span class="box">
+              <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+                <polyline points="2 6 5 9 10 3" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+              </svg>
+            </span>
+          </label>
         </div>
-        <div class="bottom-footer">
-            <h1>Conectar a Internet</h1>
-        </div>
-        <h1>Acepta los términos y condiciones para continuar</h1>
+        <span>
+          Acepto los <span class="blue">términos y condiciones</span> y la
+          <span class="blue">política de privacidad</span> para el uso del Wi-Fi público.
+        </span>
+      </div>
+
+      <button disabled="true" class="bottom-footer">
+        <h1>Conectar a Internet</h1>
+      </button>
+      <h1>Acepta los términos y condiciones para continuar</h1>
     </footer>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

@@ -1,175 +1,116 @@
-* {
-  font-family: 'Inter', sans-serif;
-  margin: 0;
+* { font-family: 'Inter', sans-serif; margin: 0; }
+html, body { height: 100%; }
+body { background:#fff; overflow: hidden; }  /* sin scroll mientras todo quepa */
+
+:root{
+  --header-h: 100px;       /* ajusta si tu header es más alto */
+  --footer-h: 160px;       /* ajusta si tu footer es más alto */
+  --blue-600:#1d50bf;
+  --field-b:#d7e1fb;
+  --field-bg:#f9fbff;
+  --ring: 0 0 0 3px rgba(29,80,191,.15);
+  --text:#0b1633;
 }
 
-body {
-  background: #fff;
+/* Header fijo */
+.contain-header{
+  position: fixed; top:0; left:0; right:0;
+  display:flex; flex-direction:column; align-items:center;
+  background: linear-gradient(180deg, rgb(29,80,191) 0%, rgba(0,23,143,1) 90%);
+  color:#fff; gap:10px; z-index: 10;
+}
+.text-header{ font-size:1.5rem; font-weight:700; padding-top:25px; }
+.sub-header{ font-size:.8rem; font-weight:300; padding-bottom:15px; }
+
+/* Contenido entre header y footer: centrado */
+.contain-primary{
+  display:flex; flex-direction:column;
+  align-items:center;               /* centra horizontal */
+  justify-content:center;           /* centra vertical en el espacio disponible */
+  margin: var(--header-h) 48px 0 48px;
+  min-height: calc(100dvh - var(--header-h) - var(--footer-h));
+  padding: 0 8px;
+  padding-bottom: calc(var(--footer-h) + 8px); /* evita solape con footer fijo */
 }
 
-.contain-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center; 
-    background: linear-gradient(
-        180deg,
-        rgb(29, 80, 191) 0%,
-        rgba(0, 23, 143, 1) 90%
-    );
-    color: white;
-    gap: 10px;
+/* Tarjeta/form centrado y sin scroll interno */
+.form-card{
+  width: 100%;
+  max-width: 560px;                 /* ancho agradable */
+  background:#fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-sizing: border-box;
+  box-shadow: 0 10px 24px rgba(3,25,77,.08);
 }
 
-.text-header {
-  font-size: 1.5rem;
-  font-weight: 700;
-  padding-top: 25px;
+/* Grid del formulario */
+.form-grid{ display:grid; grid-template-columns: 1fr; gap:14px; }
+
+/* Controles */
+.f-control { display:flex; flex-direction:column; gap:6px; }
+.f-control *{ font-size:.7rem; }
+.f-control label{ color:#0c2159; font-weight: 600; }
+.f-control .req{ color:#2c39ee;  font-weight:700;  font-size: 1rem;}
+
+.f-control input, .f-control select{
+  height:44px; padding:0 12px; border-radius:10px;
+  border:1px solid var(--field-b); background: var(--field-bg);
+  font-size:15px; color:var(--text);
+  transition: box-shadow .2s, border-color .2s, background .2s;
+}
+.f-control input::placeholder{ color:#a4b3d1; font-size:.85rem; }
+.f-control input:focus, .f-control select:focus{
+  outline:none; border-color: var(--blue-600); background:#fff; box-shadow: var(--ring);
 }
 
-.sub-header {
-  font-size: 0.8rem;
-  font-weight: 300;
-  padding-bottom: 15px;
+/* Footer fijo */
+.contain-footer{
+  position: fixed; bottom:0; left:0; right:0;
+  display:flex; flex-direction:column; gap:10px;
+  padding: 10px 0; text-align:center; margin: 0 48px 15px 48px;
 }
-
-.contain-primary {
-    margin-top: 100px;
-    margin: 100px 48px 0 48px;
-    padding: 0px 8px;
-}
-
-.contain-footer {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 10px 0;
-    text-align: center;
-    gap: 10px;
-    margin-bottom: 15px;
-    margin: 0 48px;
-}
-
-.contain-footer * {
-    color: #46484d;
-    font-weight: 400;
-    font-size: 0.65rem;
-}
-
-.bottom-footer {
-    padding: 12px 0;
-    background-color: #d9dce0;
-    border-radius: 12px;
-}
-
-.bottom-footer * {
-    color: white;
-    font-weight: 700;
-    font-size: 0.9rem;
-}
-
-.blue{
-    color: #1d50bf;
-    text-decoration: underline;
-}
+.contain-footer *{ color:#46484d; font-weight:400; font-size:.65rem; }
+.bottom-footer{ height: 45px; background:#d9dce0; border-radius:12px; border: none; box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.25);-webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.25);-moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.25);}
+.bottom-footer *{ color:#fff; font-weight:700; font-size:.9rem; }
+.blue{ color:#1d50bf; text-decoration:underline; }
 
 .contain-condition{
-    display: flex;
-    align-items: start;
-    gap: 0.5px;
-    padding: 10px;
-    background-color: #f3f4f6;
-    border-radius: 12px;
-    gap: 4px;
+  display:flex; align-items:center; gap:8px;
+  padding:10px; background:#f3f4f6; border-radius:12px;
 }
 
-.contain-condition *{
-    text-align: left;
-    font-size: 0.6rem;
+/* ===== Checkbox cuadrado exacto (18x18) con palomita centrada ===== */
+.checkbox-wrapper-46 input[type="checkbox"]{ display:none; }
+
+.checkbox-wrapper-46 .cbx{
+  display:inline-flex; align-items:center; cursor:pointer; user-select:none;
 }
 
-/* From Uiverse.io by vishnupprajapat */ 
-.checkbox-wrapper-46 input[type="checkbox"] {
-  display: none;
-  visibility: hidden;
+.checkbox-wrapper-46 .cbx .box{
+  width:18px; height:18px; border:1px solid #9098a9; border-radius:3px;
+  background:#fff; display:flex; align-items:center; justify-content:center;
+  transition: all .2s ease;
 }
 
-.checkbox-wrapper-46 .cbx {
-  margin: auto;
-  -webkit-user-select: none;
-  user-select: none;
-  cursor: pointer;
-}
-.checkbox-wrapper-46 .cbx span {
-  display: inline-block;
-  vertical-align: middle;
-  transform: translate3d(0, 0, 0);
-}
-.checkbox-wrapper-46 .cbx span:first-child {
-  position: relative;
-  width: 18px;
-  height: 18px;
-  border-radius: 3px;
-  transform: scale(1);
-  vertical-align: middle;
-  border: 1px solid #9098a9;
-  transition: all 0.2s ease;
-}
-.checkbox-wrapper-46 .cbx span:first-child svg {
-  position: absolute;
-  top: 3px;
-  left: 2px;
-  fill: none;
-  stroke: #ffffff;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 16px;
-  stroke-dashoffset: 16px;
-  transition: all 0.3s ease;
-  transition-delay: 0.1s;
-  transform: translate3d(0, 0, 0);
-}
-.checkbox-wrapper-46 .cbx span:first-child:before {
-  content: "";
-  width: 100%;
-  height: 100%;
-  background: #506eec;
-  display: block;
-  transform: scale(0);
-  opacity: 1;
-  border-radius: 50%;
-}
-.checkbox-wrapper-46 .cbx span:last-child {
-  padding-left: 8px;
-}
-.checkbox-wrapper-46 .cbx:hover span:first-child {
-  border-color: #506eec;
+.checkbox-wrapper-46 .cbx:hover .box{ border-color:#2c39ee; }
+
+.checkbox-wrapper-46 .cbx svg{
+  width:12px; height:12px;
+  stroke:#fff; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;
+  stroke-dasharray:16; stroke-dashoffset:16; transition: stroke-dashoffset .3s ease;
 }
 
-.checkbox-wrapper-46 .inp-cbx:checked + .cbx span:first-child {
-  background: #506eec;
-  border-color: #506eec;
-  animation: wave-46 0.4s ease;
+.checkbox-wrapper-46 .inp-cbx:checked + .cbx .box{
+  background:#2c39ee; border-color:#2c39ee;
 }
-.checkbox-wrapper-46 .inp-cbx:checked + .cbx span:first-child svg {
-  stroke-dashoffset: 0;
-}
-.checkbox-wrapper-46 .inp-cbx:checked + .cbx span:first-child:before {
-  transform: scale(3.5);
-  opacity: 0;
-  transition: all 0.6s ease;
+.checkbox-wrapper-46 .inp-cbx:checked + .cbx .box svg{
+  stroke-dashoffset:0;
 }
 
-@keyframes wave-46 {
-  50% {
-    transform: scale(0.9);
-  }
+/* Utilidad accesible (oculta el h2, pero mantiene semántica) */
+.visually-hidden{
+  position:absolute !important; width:1px; height:1px; margin:-1px; padding:0; border:0;
+  clip:rect(0 0 0 0); overflow:hidden;
 }
+
