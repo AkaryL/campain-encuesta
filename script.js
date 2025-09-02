@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const tiempoInicio = Date.now();
+  const user_agent = navigator.userAgent;
 
   validar(); // estado inicial
 
@@ -78,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     data.append("edad", edad.value);
     data.append("genero", genero.value);
     data.append("timeonscreen", timeonscreen);
+    data.append("user_agent", user_agent);
 
     try {
       const response = await fetch(`http://localhost:4000/api/v2/campaigns/encuesta?user_mac=${user_mac}&router_mac=${router_mac}`, {
