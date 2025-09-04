@@ -1,70 +1,128 @@
 document.addEventListener("DOMContentLoaded", () => {
   const nombre   = document.getElementById("nombre");
-  const edad     = document.getElementById("edad");
-  const genero   = document.getElementById("genero");
+  const edadSel  = document.getElementById("edad");           // ahora es <select>
+  const generoSel = document.getElementById("genero");        // puede no existir
+  const identidadRadios = document.querySelectorAll('input[name="identidad"]'); // radios, si existen
   const checkbox = document.getElementById("cbx-46");
-  const boton    = document.getElementById("btn-conectar"); // si prefieres, usa tu querySelector actual
-  const text     = document.querySelector(".text-footer");
-  const edadError    = document.getElementById("edad-error");
-  const nombreError  = document.getElementById("nombre-error");
+  const boton    = document.getElementById("btn-conectar");
+  const text     = document.querySelector(".text-footer");    // puede no existir
 
+  const edadError   = document.getElementById("edad-error");
+  const nombreError = document.getElementById("nombre-error");
+
+  const tiempoInicio = Date.now();
+  const user_agent = navigator.userAgent;
+
+  // ---- utils
+  function getGenero() {
+    // 1) Si hay <select id="genero">
+    if (generoSel) return generoSel.value || "";
+    // 2) Si hay radios name="identidad"
+    if (identidadRadios && identidadRadios.length) {
+      const r = Array.from(identidadRadios).find(x => x.checked);
+      return r ? r.value : "";
+    }
+    return "";
+  }
+
+  // ---- validaciones
   function validarEdad(){
-    const v = edad.value.trim();
-    if (v === "") { edadError.textContent = ""; edad.setCustomValidity(""); return false; }
-    const n = Number(v);
-    if (!Number.isInteger(n)) { edadError.textContent = "Ingresa un número entero."; edad.setCustomValidity("Número inválido"); return false; }
-    if (n < 1 || n > 120) { edadError.textContent = "La edad debe estar entre 1 y 120."; edad.setCustomValidity("Fuera de rango"); return false; }
-    edadError.textContent = ""; edad.setCustomValidity(""); return true;
+    if (!edadSel) return true; // si no hay campo, no bloquea
+    const val = edadSel.value;
+
+    if (!val) {
+      edadError.textContent = "Selecciona un rango de edad.";
+      edadSel.setCustomValidity("Selecciona un rango");
+      return false;
+    }
+
+    // valores permitidos (opcional, por seguridad)
+    const permitidos = ["00-12","13-17","18-24","25-34","35-44","45-54","55-64","65+"];
+    if (!permitidos.includes(val)) {
+      edadError.textContent = "Selecciona un rango válido.";
+      edadSel.setCustomValidity("Valor inválido");
+      return false;
+    }
+
+    edadError.textContent = "";
+    edadSel.setCustomValidity("");
+    return true;
   }
 
   function validarNombre(){
-    const v = nombre.value.trim().replace(/\s+/g, " ");
-    if (v === "") { nombreError.textContent = ""; nombre.setCustomValidity(""); return false; }
+    const v = (nombre?.value || "").trim().replace(/\s+/g, " ");
+    if (v === "") { 
+      nombreError.textContent = ""; 
+      nombre?.setCustomValidity(""); 
+      return false; 
+    }
     const soloLetras = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ' -]+$/.test(v);
     const partes = v.split(" ");
     const dosPalabras = partes.length >= 2 && partes[0].length >= 2 && partes[1].length >= 2;
-    if (!soloLetras){ nombreError.textContent = "Usa solo letras y espacios."; nombre.setCustomValidity("Caracteres inválidos"); return false; }
-    if (!dosPalabras){ nombreError.textContent = "Escribe nombre y apellido."; nombre.setCustomValidity("Nombre incompleto"); return false; }
-    nombreError.textContent = ""; nombre.setCustomValidity(""); return true;
+
+    if (!soloLetras){ 
+      nombreError.textContent = "Usa solo letras y espacios."; 
+      nombre?.setCustomValidity("Caracteres inválidos"); 
+      return false; 
+    }
+    if (!dosPalabras){ 
+      nombreError.textContent = "Escribe nombre y apellido."; 
+      nombre?.setCustomValidity("Nombre incompleto"); 
+      return false; 
+    }
+    nombreError.textContent = ""; 
+    nombre?.setCustomValidity(""); 
+    return true;
+  }
+
+  function validarGenero(){
+    return getGenero() !== "";
   }
 
   function validar() {
-    const ok = validarNombre() &&
-               validarEdad() &&
-               genero.value !== "" &&
-               checkbox.checked;
+    const ok = validarNombre() && validarEdad() && validarGenero() && (checkbox?.checked || false);
 
-    boton.disabled = !ok;
-    boton.style.pointerEvents = ok ? "auto" : "none";
-    boton.style.opacity = ok ? "1" : "0.5";
-    boton.style.backgroundColor = ok ? "#2c39ee" : "#d9dce0";
-    text.textContent = ok ? "Listo para conectar" : "Acepta los términos y condiciones para continuar";
-    text.style.color = ok ? "#15db51" : "#46484d";
+    if (boton){
+      boton.disabled = !ok;
+      boton.style.pointerEvents = ok ? "auto" : "none";
+      boton.style.backgroundColor = ok ? "#2c39ee" : "#504c4c";
+    }
+    if (text){
+      text.textContent = ok ? "Listo para conectar" : "Acepta los términos y condiciones para continuar";
+      text.style.color = ok ? "#15db51" : "#46484d";
+    }
   }
 
-  // eventos
-  nombre.addEventListener("input", () => { validarNombre(); validar(); });
-  nombre.addEventListener("change", () => { validarNombre(); validar(); });
-  edad.addEventListener("input", () => { validarEdad(); validar(); });
-  edad.addEventListener("change", () => { validarEdad(); validar(); });
-  [genero, checkbox].forEach(el => {
-    el.addEventListener("input",  validar);
-    el.addEventListener("change", validar);
-  });
+  // ---- eventos
+  nombre?.addEventListener("input", () => { validarNombre(); validar(); });
+  nombre?.addEventListener("change", () => { validarNombre(); validar(); });
 
-  // Función para obtener parámetros GET
+  edadSel?.addEventListener("change", () => { validarEdad(); validar(); });
+
+  if (generoSel){
+    generoSel.addEventListener("input", validar);
+    generoSel.addEventListener("change", validar);
+  }
+  if (identidadRadios && identidadRadios.length){
+    identidadRadios.forEach(r => {
+      r.addEventListener("input", validar);
+      r.addEventListener("change", validar);
+    });
+  }
+
+  checkbox?.addEventListener("input", validar);
+  checkbox?.addEventListener("change", validar);
+
+  // helper query param
   function getQueryParam(key) {
     const params = new URLSearchParams(window.location.search);
     return params.get(key);
   }
 
-  const tiempoInicio = Date.now();
-  const user_agent = navigator.userAgent;
-
   validar(); // estado inicial
 
-  // Enviar los datos al backend cuando se hace clic en "Conectar a Internet"
-  boton.addEventListener("click", async () => {
+  // ---- envío
+  boton?.addEventListener("click", async () => {
     const user_mac = getQueryParam("user_mac");
     const router_mac = getQueryParam("router_mac");
     const timeonscreen = Math.floor((Date.now() - tiempoInicio) / 1000);
@@ -75,21 +133,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const data = new URLSearchParams();
-    data.append("nombre", nombre.value.trim());
-    data.append("edad", edad.value);
-    data.append("genero", genero.value);
+    data.append("nombre", (nombre?.value || "").trim());
+    data.append("edad", edadSel?.value || "");           // ahora mandamos el rango (p.ej. "13-17")
+    data.append("genero", getGenero());                  // radio o select, según exista
     data.append("timeonscreen", timeonscreen);
     data.append("user_agent", user_agent);
 
     try {
       const response = await fetch(`http://localhost:4000/api/v2/campaigns/encuesta?user_mac=${user_mac}&router_mac=${router_mac}`, {
-        method: "POST", // ✅ CORREGIDO: usar POST
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: data
       });
-
       const result = await response.json();
 
       if (result.campaign || result.redireccion) {

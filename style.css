@@ -1,48 +1,67 @@
-* { font-family: 'Inter', sans-serif; margin: 0; }
+* { font-family: 'Inter', sans-serif; margin: 0; box-sizing: border-box; }
 html, body { height: 100%; }
-body { background:#fff; overflow: hidden; }  /* sin scroll mientras todo quepa */
+body { background:#fefefe; overflow-x:hidden; overflow-y:auto; }
 
+/* Variables */
 :root{
   --header-h: 100px;       /* ajusta si tu header es más alto */
   --footer-h: 160px;       /* ajusta si tu footer es más alto */
-  --blue-600:#1d50bf;
+  --blue-600:#a0a0a0;
   --field-b:#d7e1fb;
   --field-bg:#f9fbff;
   --ring: 0 0 0 3px rgba(29,80,191,.15);
-  --text:#0b1633;
+  --text:#000;
 }
 
 /* Header fijo */
+.div-reloj{ display:flex; gap:8px; }
+.reloj-icon { width:15px; height:15px; object-fit:contain; }
 .contain-header{
   position: fixed; top:0; left:0; right:0;
   display:flex; flex-direction:column; align-items:center;
-  background: linear-gradient(180deg, rgb(29,80,191) 0%, rgba(0,23,143,1) 90%);
-  color:#fff; gap:10px; z-index: 10;
+  background:white; color:black; gap:8px; z-index:10;
+  padding: 10px 12px 8px;
 }
-.text-header{ font-size:1.5rem; font-weight:700; padding-top:25px; }
-.sub-header{ font-size:.8rem; font-weight:300; padding-bottom:15px; }
+.text-header{ font-size:1rem; font-weight:700; }
+.sub-header{ font-size:.8rem; font-weight:300; }
 
-/* Contenido entre header y footer: centrado */
+/* ===== Área entre header y footer (con FONDO) ===== */
 .contain-primary{
-  display:flex; flex-direction:column;
-  align-items:center;               /* centra horizontal */
-  justify-content:center;           /* centra vertical en el espacio disponible */
-  margin: var(--header-h) 12px 0 12px;
+  /* ocupa justo el hueco entre header y footer */
+  margin: var(--header-h) 0 0 0;
   min-height: calc(100dvh - var(--header-h) - var(--footer-h));
-  padding: 0 8px;
-  padding-bottom: calc(var(--footer-h) + 8px); /* evita solape con footer fijo */
+
+  /* fondo con logos ya dentro del arte */
+  background-image: url("./Fondo_encuesta-red jalisco.png");
+  background-repeat: no-repeat;
+  background-position: top left;
+  background-size: auto 100%;   /* llena el ALTO sin cortar el arte */
+  background-color: #fff;
+  border-top: 2px solid #282424;
+
+  /* layout interno */
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+
+  /* padding inferior para no tapar con el footer */
+  padding: 0 0 calc(var(--footer-h) + 8px);
+  width: 100%;
 }
 
-/* Tarjeta/form centrado y sin scroll interno */
+/* Tarjeta/form transparente encima del fondo */
 .form-card{
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
   width: 100%;
-  max-width: 560px;                 /* ancho agradable */
-  background:#fff;
-  border-radius: 12px;
-  padding: 16px;
-  box-sizing: border-box;
-  box-shadow: 0 10px 24px rgba(3,25,77,.08);
+  max-width: 640px;    /* en pantallas grandes no se va infinito */
+  padding: 16px 16px;
 }
+
+/* El form arranca debajo de la zona de logos del propio fondo */
+.form-card form{ padding-top: 140px; }
 
 /* Grid del formulario */
 .form-grid{ display:grid; grid-template-columns: 1fr; gap:14px; }
@@ -50,89 +69,67 @@ body { background:#fff; overflow: hidden; }  /* sin scroll mientras todo quepa *
 /* Controles */
 .f-control { display:flex; flex-direction:column; gap:6px; }
 .f-control *{ font-size:.7rem; }
-.f-control label{ color:#0c2159; font-weight: 600; }
-.f-control .req{ color:#2c39ee;  font-weight:700;  font-size: 1rem;}
+.f-control label{ color:#2b2b2b; font-weight:600; font-size:.85rem; }
 
 .f-control input, .f-control select{
-  height:44px; padding:0 0.6rem; border-radius:10px;
-  border:1px solid var(--field-b); background: var(--field-bg);
-  font-size:0.6rem; color:var(--text);
+  width: 100%;
+  height:44px; padding:0 0.9rem; border-radius:12px;
+  border:1px solid #e3e6ef; background:#f6f9ff;
+  font-size:.84rem; color:#222;
+  box-shadow:0 1px 0 rgba(0,0,0,.04);
   transition: box-shadow .2s, border-color .2s, background .2s;
 }
-.f-control input::placeholder{ color:#a4b3d1; font-size:.85rem; }
+.f-control input::placeholder{ color:#9aa3b2; font-size:.84rem; }
 .f-control input:focus, .f-control select:focus{
-  outline:none; border-color: var(--blue-600); background:#fff; box-shadow: var(--ring);
+  outline:none; border-color:#b8c4ff; background:#fff; box-shadow:0 0 0 3px rgba(29,80,191,.12);
 }
 
-/* Footer fijo */
+/* Footer fijo (se mantiene tu estructura) */
 .contain-footer{
   position: fixed; bottom:0; left:0; right:0;
-  display:flex; flex-direction:column; gap:10px;
-  padding: 10px 0; text-align:center; margin: 0 48px 15px 48px;
+  display:flex; flex-direction:column; text-align:center;
+  z-index: 11; /* por encima del contenido */
 }
-.contain-footer *{ color:#46484d; font-weight:400; font-size:.65rem; }
-.bottom-footer{ height: 45px; background:#d9dce0; border-radius:12px; border: none; box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.25);-webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.25);-moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.25);}
+.contain-footer *{ color:#fff; font-weight:300; font-size: .7rem; }
+.bottom-footer{ height: 50px; background:#3f3f41; border: none; }
 .bottom-footer *{ color:#fff; font-weight:700; font-size:.9rem; }
-.blue{ color:#1d50bf; text-decoration:underline; }
+.blue{ color:#1d50bf; font-size: 0.7rem; text-decoration:underline; }
 
 .contain-condition{
   display:flex; align-items:center; gap:8px;
-  padding:10px; background:#f3f4f6; border-radius:12px;
+  padding: 10px 12px; background:#282424; 
 }
 
 /* ===== Checkbox cuadrado exacto (18x18) con palomita centrada ===== */
 .checkbox-wrapper-46 input[type="checkbox"]{ display:none; }
-
-.checkbox-wrapper-46 .cbx{
-  display:inline-flex; align-items:center; cursor:pointer; user-select:none;
-}
-
+.checkbox-wrapper-46 .cbx{ display:inline-flex; align-items:center; cursor:pointer; user-select:none; }
 .checkbox-wrapper-46 .cbx .box{
   width:18px; height:18px; border:1px solid #9098a9; border-radius:3px;
   background:#fff; display:flex; align-items:center; justify-content:center;
   transition: all .2s ease;
 }
-
 .checkbox-wrapper-46 .cbx:hover .box{ border-color:#2c39ee; }
-
 .checkbox-wrapper-46 .cbx svg{
   width:12px; height:12px;
   stroke:#fff; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;
   stroke-dasharray:16; stroke-dashoffset:16; transition: stroke-dashoffset .3s ease;
 }
+.checkbox-wrapper-46 .inp-cbx:checked + .cbx .box{ background:#2c39ee; border-color:#2c39ee; }
+.checkbox-wrapper-46 .inp-cbx:checked + .cbx .box svg{ stroke-dashoffset:0; }
 
-.checkbox-wrapper-46 .inp-cbx:checked + .cbx .box{
-  background:#2c39ee; border-color:#2c39ee;
-}
-.checkbox-wrapper-46 .inp-cbx:checked + .cbx .box svg{
-  stroke-dashoffset:0;
-}
-
-/* Utilidad accesible (oculta el h2, pero mantiene semántica) */
+/* Utilidades y otras pantallas que ya tenías */
 .visually-hidden{
   position:absolute !important; width:1px; height:1px; margin:-1px; padding:0; border:0;
   clip:rect(0 0 0 0); overflow:hidden;
 }
 
-
-.video{
-  width: 100%;
-}
-
+.video{ width: 100%; }
 #customPlayBtn {
-  z-index: 99;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: none;
-  background: none;
-  cursor: pointer;
+  z-index: 99; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%); border: none; background: none; cursor: pointer;
 }
 
-.img-thanks{
-  width: 100%;
-}
+.img-thanks{ width: 100%; }
 
 .contain-footer-thanks{
   position: fixed; bottom:0; left:0; right:0;
@@ -142,9 +139,75 @@ body { background:#fff; overflow: hidden; }  /* sin scroll mientras todo quepa *
 .contain-footer-thanks *{ color:#fff; font-weight:500; font-size: 1.1rem; }
 
 .contain-condition-thanks{
-  display:flex; justify-content: center ; align-items:center; width: 100%;;
+  display:flex; justify-content: center ; align-items:center; width: 100%;
   height: 140px; background:#10b981; gap: 8px;
 }
 
-
 .field-error{ color:#c21b1b; font-size:.8rem; }
+
+/* =================== RESPONSIVE =================== */
+
+/* En móviles pequeños: ancho total y paddings compactos */
+@media (max-width: 420px){
+  .form-card{ max-width: 100%; padding: 16px 12px; }
+  .contain-condition{ padding: 10px 10px; }
+  .form-card form{ padding-top: 130px; } /* menos espacio bajo el logo */
+}
+
+/* En móviles muy angostos (<=360px): aún menos tope superior */
+@media (max-width: 360px){
+  .form-card form{ padding-top: 120px; }
+}
+
+/* En pantallas anchas (tableta/escritorio): centra y limita */
+@media (min-width: 768px){
+  .form-card{ max-width: 480px; }
+  /* Para que el arte no se vea “estirado” a lo alto, puedes probar cover: */
+  /* .contain-primary{ background-size: cover; } */
+}
+
+/* Landscape en móviles: baja un poco el tope para no comer espacio */
+@media (orientation: landscape) and (max-height: 480px){
+  .form-card form{ padding-top: 110px; }
+}
+
+
+/* ===== Radios estilo "circulitos" (añadir al final) ===== */
+fieldset.f-control{
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+fieldset.f-control legend{
+  color:#2b2b2b;
+  font-weight:600;
+  font-size:.85rem;
+  margin-bottom: 6px;
+}
+
+.radio-group{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.radio{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .84rem;
+  color: #222;
+}
+
+/* circulito */
+.radio input[type="radio"]{
+  width: 18px;
+  height: 18px;
+  /* color de acento para navegadores modernos */
+  accent-color: #6b6ee6; /* cambia si quieres otro tono */
+  cursor: pointer;
+}
+.radio span{ line-height: 1; }
+
+/* Asegura que el select ocupe todo el ancho (ya lo hacía, pero reforzamos) */
+.f-control select{ width: 100%; }

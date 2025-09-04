@@ -1,0 +1,78 @@
+/* ===== Reset mínimo y tipografía ===== */
+:root{
+  --hero-bg: #0a0f2b;     /* azul muy oscuro del header */
+  --hero-fg: #ffffff;
+  --page-bg: #0a0f2b;
+  --card-bg: #ffffff;
+  --card-br: 12px;
+  --maxw: 420px;          /* ancho “móvil” cómodo */
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body.thanks {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Inter", Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--page-bg);
+  color: #0b0b0b;
+  display: grid;
+  grid-template-rows: auto 1fr;  /* header + contenido */
+  min-height: 100dvh;
+}
+
+/* ===== Encabezado oscuro ===== */
+.thanks-hero{
+  background: var(--hero-bg);
+  color: var(--hero-fg);
+  text-align: center;
+  padding: 20px 16px 18px;
+}
+.thanks-hero h1{
+  margin: 0;
+  font-size: clamp(1.15rem, 4.2vw, 1.6rem);
+  line-height: 1.25;
+  font-weight: 800;
+}
+.thanks-sub{
+  margin: 8px 0 0;
+  font-size: clamp(.8rem, 3.5vw, .95rem);
+  font-weight: 400;
+  opacity: .9;
+}
+
+/* ===== Contenedor del póster ===== */
+.thanks-main{
+  display: grid;
+  place-items: start center;
+  padding: 16px;
+}
+
+/* Marco blanco del póster (como en el mock del teléfono) */
+.poster{
+  margin: 0;
+  width: 100%;
+  max-width: var(--maxw);
+  background: var(--card-bg);
+  border-radius: var(--card-br);
+  box-shadow:
+    0 1px 2px rgba(0,0,0,.05),
+    0 10px 30px rgba(0,0,0,.08);
+  padding: 14px;
+}
+
+/* Imagen del póster */
+.poster-img{
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;         /* pequeño redondeo interno */
+}
+
+/* ===== Responsivo ===== */
+@media (min-width: 480px){
+  :root{ --maxw: 460px; }
+  .poster{ padding: 16px; }
+}
+@media (min-width: 768px){
+  :root{ --maxw: 520px; }
+}

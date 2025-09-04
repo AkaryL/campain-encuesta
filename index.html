@@ -9,44 +9,61 @@
   <body>
     <!-- Header fijo -->
     <header class="contain-header">
-      <h1 class="text-header">Conéctate a Internet</h1>
-      <span class="sub-header">Ayúdanos con una breve encuesta</span>
+      <h1 class="text-header">No cierres esta ventana</h1>
+      <div class="div-reloj">
+        <img src="./reloj.png" alt="reloj" class="reloj-icon"/>
+        <span class="sub-header">Contesta el cuestionario para conectar a internet</span>
+      </div>
+      <span class="sub-header">1/2</span>
     </header>
 
-    <!-- Contenido entre header y footer -->
-    <main class="contain-primary">
-        <section id="encuesta" class="form-card" aria-labelledby="encuesta-title">
-            <h2 id="encuesta-title" class="visually-hidden">Encuesta</h2>
-            <form novalidate>
-            <div class="form-grid">
-                <!-- Nombre -->
-                <div class="f-control">
-                  <label for="nombre">Nombre completo <span class="req">*</span></label>
-                  <input id="nombre" type="text" placeholder="Escribe tu nombre completo" required />
-                  <small id="nombre-error" class="field-error" aria-live="polite"></small>
-                </div>
-
-                <div class="f-control">
-                  <label for="edad">Edad <span class="req">*</span></label>
-                  <input id="edad" type="number" min="1" max="120" step="1" required
-                        placeholder="Ej: 25" inputmode="numeric" />
-                  <small id="edad-error" class="field-error" aria-live="polite"></small>
-                </div>
-
-
-                <!-- Género -->
-                <div class="f-control">
-                <label for="genero">Género <span class="req">*</span></label>
-                <select id="genero" required>
-                    <option value="" disabled selected>Selecciona tu género</option>
-                    <option value="hombre">Masculino</option>
-                    <option value="mujer">Femenino</option>
-                </select>
-                </div>
+    <!-- Contenido -->
+    <div class="contain-primary">
+      <section id="encuesta" class="form-card" aria-labelledby="encuesta-title">
+        <form novalidate>
+          <div class="form-grid">
+            <!-- Nombre (igual que antes) -->
+            <div class="f-control">
+              <label for="nombre">Nombre</label>
+              <input id="nombre" type="text" placeholder="Escribe tu nombre completo" required />
+              <small id="nombre-error" class="field-error" aria-live="polite"></small>
             </div>
-            </form>
-        </section>
-    </main>
+
+            <!-- ¿Cómo te identificas? (Hombre/Mujer, tipo radio) -->
+            <fieldset class="f-control">
+              <legend>¿Cómo te identificas?</legend>
+              <div class="radio-group">
+                <label class="radio">
+                  <input type="radio" name="identidad" value="hombre" required />
+                  <span>Hombre</span>
+                </label>
+                <label class="radio">
+                  <input type="radio" name="identidad" value="mujer" required />
+                  <span>Mujer</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <!-- Edad (select por rangos) -->
+            <div class="f-control">
+              <label for="edad">Edad</label>
+              <select id="edad" required>
+                <option value="" disabled selected>Seleccionar</option>
+                <option value="00-12">00 - 12</option>
+                <option value="13-17">13 - 17</option>
+                <option value="18-24">18 - 24</option>
+                <option value="25-34">25 - 34</option>
+                <option value="35-44">35 - 44</option>
+                <option value="45-54">45 - 54</option>
+                <option value="55-64">55 - 64</option>
+                <option value="65+">+65</option>
+              </select>
+              <small id="edad-error" class="field-error" aria-live="polite"></small>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
 
     <!-- Footer fijo -->
     <footer class="contain-footer">
@@ -62,15 +79,13 @@
           </label>
         </div>
         <span>
-          Acepto los <span class="blue">términos y condiciones</span> y la
-          <span class="blue">política de privacidad</span> para el uso del Wi-Fi público.
+          He leído y acepto las <span class="blue">Políticas de Privacidad</span>
         </span>
       </div>
 
       <button id="btn-conectar" disabled="true" class="bottom-footer">
-        <h1>Conectar a Internet</h1>
+        <h1>Siguiente ></h1>
       </button>
-      <h1 class="text-footer">Acepta los términos y condiciones para continuar</h1>
     </footer>
     <script src="script.js"></script>
   </body>
