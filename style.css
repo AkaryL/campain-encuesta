@@ -50,39 +50,6 @@ body { background:#fefefe; overflow-x:hidden; overflow-y:auto; }
   width: 100%;
 }
 
-/* Tarjeta/form transparente encima del fondo */
-.form-card{
-  background: none;
-  border-radius: 0;
-  box-shadow: none;
-  width: 100%;
-  max-width: 640px;    /* en pantallas grandes no se va infinito */
-  padding: 16px 16px;
-}
-
-/* El form arranca debajo de la zona de logos del propio fondo */
-.form-card form{ padding-top: 140px; }
-
-/* Grid del formulario */
-.form-grid{ display:grid; grid-template-columns: 1fr; gap:14px; }
-
-/* Controles */
-.f-control { display:flex; flex-direction:column; gap:6px; }
-.f-control *{ font-size:.7rem; }
-.f-control label{ color:#2b2b2b; font-weight:600; font-size:.85rem; }
-
-.f-control input, .f-control select{
-  width: 100%;
-  height:44px; padding:0 0.9rem; border-radius:12px;
-  border:1px solid #e3e6ef; background:#f6f9ff;
-  font-size:.84rem; color:#222;
-  box-shadow:0 1px 0 rgba(0,0,0,.04);
-  transition: box-shadow .2s, border-color .2s, background .2s;
-}
-.f-control input::placeholder{ color:#9aa3b2; font-size:.84rem; }
-.f-control input:focus, .f-control select:focus{
-  outline:none; border-color:#b8c4ff; background:#fff; box-shadow:0 0 0 3px rgba(29,80,191,.12);
-}
 
 /* Footer fijo (se mantiene tu estructura) */
 .contain-footer{
